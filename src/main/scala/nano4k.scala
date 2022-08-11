@@ -9,7 +9,10 @@ object GoWinPath{
   val path = "C:\\Gowin\\Gowin_V1.9.8.03\\"
   val gw_sh = path + "IDE\\bin\\gw_sh.exe"
   val programmer = path + "ProgrammerBL702\\bin\\programmer_cli.exe"
+  val prim_gw1n = path + "IDE\\data\\hardware_core\\gw1n\\prim_syn.v"
+  val prim_gw2a = path + "IDE\\data\\hardware_core\\gw2a\\prim_syn.v"
 }
+
 case class Nano4k() extends Component {
   val io = new Bundle {
     val sys_clk = in(Bool())
