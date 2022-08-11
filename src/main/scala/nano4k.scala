@@ -3,7 +3,13 @@ package nano4k
 import spinal.core._
 import spinal.lib.Counter
 import spinal.lib.DoCmd.doCmd
+import java.io.File
 
+object GoWinPath{
+  val path = "C:\\Gowin\\Gowin_V1.9.8.03\\"
+  val gw_sh = path + "IDE\\bin\\gw_sh.exe"
+  val programmer = path + "ProgrammerBL702\\bin\\programmer_cli.exe"
+}
 case class Nano4k() extends Component {
   val io = new Bundle {
     val sys_clk = in(Bool())
@@ -39,10 +45,9 @@ object genHdlMain {
 
 object synthesizePlaceRouteMain {
   def main(args: Array[String]) {
-    val gw_sh = "C:\\Gowin\\Gowin_V1.9.8.03\\IDE\\bin\\gw_sh.exe"
     doCmd(
       s"""
-         |$gw_sh Nano4k.tcl
+         |${GoWinPath.gw_sh} Nano4k.tcl
          |""".stripMargin,
       "src\\main\\rtl")
   }
@@ -50,16 +55,17 @@ object synthesizePlaceRouteMain {
 
 object programmerMain {
   def main(args: Array[String]) {
-    val gw_prog = "C:\\Gowin\\Gowin_V1.9.8.03\\ProgrammerBL702\\bin\\programmer_cli.exe"
+    val file = new File("");
+    val pwd = file.getAbsolutePath
+    println(pwd)
     doCmd(
       s"""
-         |$gw_prog --device GW1NSER-4C -r 2 --fsFile C:\\Users\\csliu\\Desktop\\TangNano4k\\src\\main\\rtl\\impl\\pnr\\project.fs
-         |""".stripMargin,
-      "src\\main\\rtl")
+         |${GoWinPath.programmer} --device GW1NSER-4C -r 2 --fsFile $pwd\\src\\main\\rtl\\impl\\pnr\\project.fs
+         |""".stripMargin)
   }
 }
 
-object Nano4kMain {
+object nano4kMain {
   def main(args: Array[String]) = {
     genHdlMain.main(args)
     synthesizePlaceRouteMain.main(args)
