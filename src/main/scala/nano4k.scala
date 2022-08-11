@@ -22,7 +22,7 @@ case class Nano4k() extends Component {
 
     io.led.r := r
     io.led.g := False
-    io.led.b := False
+    io.led.b := True
   }
 }
 
